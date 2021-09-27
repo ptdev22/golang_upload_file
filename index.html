@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.PageTitle}}</title>
+</head>
+<body>
+    <form id="formElem" enctype="multipart/form-data">
+        <input type="file" id="file" name="file" >
+        <input type="" id="token" name="token" value="{{.Token}}">
+        <button type="button"  value="Submit" id="upload" onclick="uploader()">Upload</button><br>
+        <span style="color:blue"> status</span> : <span id="result_status" ></span> <br>
+        <span style="color:blue">message</span> : <span id="result_message" ></span><br>
+    </form>
+</body>
+</html>
+<script>
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    // Uploading a file
+    async function uploader() {
+        const formData = new FormData();
+        var fileField = document.getElementById('file');
+        var token = document.getElementById('token').value;
+        document.getElementById('result_status').innerHTML = ''
+        document.getElementById('result_message').innerHTML = ''
+
+        formData.append('token', token);
+        formData.append('file', fileField.files[0]);
+        try {
+            const response = fetch('/Upload', {
+                method: 'POST', // or 'PUT'
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                // body: JSON.stringify(data),
+                body: formData
+                })
+            .then(response => response.json())
+            .then(result => {
+            
+            console.log('Success:', result);
+            document.getElementById('result_status').innerHTML = result.status
+            document.getElementById('result_message').innerHTML = result.message
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+  </script>
