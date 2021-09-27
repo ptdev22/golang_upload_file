@@ -6,7 +6,7 @@
 <body>
     <form id="formElem" enctype="multipart/form-data">
         <input type="file" id="file" name="file" >
-        <input type="" id="token" name="token" value="{{.Token}}">
+        <input type="hidden" id="token" name="token" value="{{.Token}}">
         <button type="button"  value="Submit" id="upload" onclick="uploader()">Upload</button><br>
         <span style="color:blue"> status</span> : <span id="result_status" ></span> <br>
         <span style="color:blue">message</span> : <span id="result_message" ></span><br>
